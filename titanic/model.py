@@ -42,8 +42,8 @@ best_optimizer = 'rmsprop'
 verbose = 0
 
 # Load data set
-train = pd.read_csv("data/train.csv", index_col='PassengerId')
-test = pd.read_csv("data/test.csv", index_col='PassengerId')
+train = pd.read_csv("titanic/data/train.csv", index_col='PassengerId')
+test = pd.read_csv("titanic/data/test.csv", index_col='PassengerId')
 
 X = prep_data(train)
 X = X.drop(['Survived'], axis=1).values.astype(float)
@@ -85,5 +85,5 @@ submission = pd.DataFrame({
 
 
 submission.sort_values('PassengerId', inplace=True)
-submission.to_csv("run1.csv", index=False)
+submission.to_csv("titanic/run1.csv", index=False)
 
