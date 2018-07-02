@@ -6,7 +6,8 @@ from keras.layers import Input, Dense
 from keras.models import Model, Sequential
 from sklearn.preprocessing import StandardScaler
 
-dat = pd.read_csv("data/train.csv")
+
+dat = pd.read_csv("/Users/john/Projects/kaggle-competitions/housing-prices/data/train.csv")
 dat = dat[['SalePrice', 'MSSubClass', 'YrSold', 'LotFrontage', 'LotArea']]
 #dat = pd.get_dummies(dat, dummy_na=True)
 dat.head()
@@ -25,7 +26,7 @@ sc = StandardScaler()
 X_scale = sc.fit(X)
 X = X_scale.transform(X)
 
-y = np.array(y).reshape(-1, 1)
+#y = np.array(y).reshape(-1, 1)
 y_scale = sc.fit(y)
 y = y_scale.transform(y)
 
@@ -38,11 +39,15 @@ ksmod.compile(optimizer='adam', loss='mean_squared_error', metrics=['mse'])
 
 ksmod.fit(X, y, epochs=100, batch_size = 20)
 
+Xpred = ksmod.predict(X)
+y_scale.transform(Xpred)
+
 scores = ksmod.evaluate(X, y)
 scores
 
+#---------------------------------
 # Test data
-tdat = pd.read_csv("data/test.csv")
+tdat = pd.read_csv("/Users/john/Projects/kaggle-competitions/housing-prices/data/test.csv")
 tdat.head()
 
 tdat = tdat[['MSSubClass', 'YrSold', 'LotFrontage', 'LotArea']]
@@ -61,3 +66,6 @@ tX = X_scale.transform(tX)
 pred = ksmod.predict(np.array(tX))
 pred
 y_scale.inverse_transform(pred)
+
+
+ksmod.predict(X)
